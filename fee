@@ -1,0 +1,22 @@
+Fee Management (fees.php):
+ <?php
+include 'config.php';
+
+// Collect Fee
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['collect_fee'])) {
+    $student_id = $_POST['student_id'];
+    $amount = $_POST['amount'];
+    $date_paid = date('Y-m-d');
+
+    $sql = "INSERT INTO fees (student_id, amount, date_paid) VALUES ('$student_id', '$amount', '$date_paid')";
+    if ($conn->query($sql) === TRUE) {
+        echo "Fee collected successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+// Fetch Fee Payment History
+$sql = "SELECT * FROM fees";
+$result = $conn->query($sql);
+?>
