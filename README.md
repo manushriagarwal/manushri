@@ -1,1 +1,1 @@
-# manushri
+hostel management system
