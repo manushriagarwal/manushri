@@ -1,0 +1,48 @@
+ Student Management (students.php):
+php
+ <?php
+include 'config.php';
+
+// Add Student
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_student'])) {
+    $name = $_POST['name'];
+    $room_number = $_POST['room_number'];
+
+    $sql = "INSERT INTO students (name, room_number) VALUES ('$name', '$room_number')";
+    if ($conn->query($sql) === TRUE) {
+        echo "Student added successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+// Edit Student
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_student'])) {
+    $id = $_POST['id'];
+    $name = $_POST['name'];
+    $room_number = $_POST['room_number'];
+
+    $sql = "UPDATE students SET name='$name', room_number='$room_number' WHERE id=$id";
+    if ($conn->query($sql) === TRUE) {
+        echo "Student updated successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+// Delete Student
+if (isset($_GET['delete_id'])) {
+    $id = $_GET['delete_id'];
+
+    $sql = "DELETE FROM students WHERE id=$id";
+    if ($conn->query($sql) === TRUE) {
+        echo "Student deleted successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+// Fetch Students
+$sql = "SELECT * FROM students";
+$result = $conn->query($sql);
+?>
