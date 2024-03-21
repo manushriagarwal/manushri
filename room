@@ -1,0 +1,45 @@
+Room Management (rooms.php):
+ <?php
+include 'config.php';
+
+// Add Room
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_room'])) {
+    $room_number = $_POST['room_number'];
+
+    $sql = "INSERT INTO rooms (room_number) VALUES ('$room_number')";
+    if ($conn->query($sql) === TRUE) {
+        echo "Room added successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+// Edit Room
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_room'])) {
+    $id = $_POST['id'];
+    $room_number = $_POST['room_number'];
+
+    $sql = "UPDATE rooms SET room_number='$room_number' WHERE id=$id";
+    if ($conn->query($sql) === TRUE) {
+        echo "Room updated successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+// Delete Room
+if (isset($_GET['delete_id'])) {
+    $id = $_GET['delete_id'];
+
+    $sql = "DELETE FROM rooms WHERE id=$id";
+    if ($conn->query($sql) === TRUE) {
+        echo "Room deleted successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+// Fetch Rooms
+$sql = "SELECT * FROM rooms";
+$result = $conn->query($sql);
+?>
